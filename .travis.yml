@@ -1,0 +1,14 @@
+language: node_js
+node_js: node
+cache:
+  directories:
+  - node_modules
+env:
+- CI=true
+deploy:
+  provider: heroku
+  api_key:
+    secure: e998mVy0MkyEgWCCJsfeKztvpYPS5mymkTaQ3johQLvttENDcAphKK27EllrH99JVOXsT7csYpuX2wFR4Bc/kgRyoIqcXDtI81FbYBtLJe5vbFUXuvy+hpje1Nsqr26tTenKO6jQIGCIYAhjZJe1LFxdLgwiRzrTAwly21uN/C/DF2kbQHr4pVFX8V31CkfQ9SdyTqRgg6xHoItKo53TJqO7f9W+RWqo49F15L2cWVGT17VlVnjLKzdMaYafbHlUrxJ1wWmhJH/6ixFqJO8MWIMlr020e6lqHUTtSTma9yzhkgAFpm/CrRii+h+Id6Bqlb9N+TcwwNlV9U3HM8GL/rdnSZnAK87BHfyEbUY28Qq5wAejxCGFrFiRzxcMfo9NeE9wjdMAjmKq0J+63w4WFmZpIVZFg/qrnT2a0LeUNR9C2SM9b0xSobtqPWU/7ayNzoAKOI8wLCmXWHst//8W3g9bVJw3Rkj24po7Pyp/W3QRjF/fxcUdf7oJUQqVtj/JUEfLBMcGNB7Is81cyHwWzxXyig8GBnJkl/AXENVJI3uSyuV7J0pQtcnFaBrsUIJ9mFB0ldOxWETYt6oKe6TTLLNCDrK+XT1WdsOMnPMi9nzP/92dN6XXTzi94gPd0Akgj7HK/UPJZ7okeTgD8bAk4SpFIauQ8cQ+g/Mr+K+00Iw=
+  app: hot-cold-thinkful
+  on:
+    repo: claytonweller/hot-cold
