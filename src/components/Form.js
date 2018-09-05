@@ -1,21 +1,16 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { trackInputValue, makeGuess, startOver } from "../actions/";
 
-export default class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: ""
-    };
-  }
-
+export class Form extends Component {
   submitGuess(e) {
     e.preventDefault();
-    this.setState({ inputValue: "" });
-    this.props.makeGuess(this.state.inputValue);
+    this.props.dispatch(makeGuess(this.props.inputValue));
+    this.props.dispatch(trackInputValue(""));
   }
 
   trackInputValue(value) {
-    this.setState({ inputValue: parseInt(value, 10) });
+    this.props.dispatch(trackInputValue(value));
   }
 
   render() {
@@ -23,7 +18,7 @@ export default class Form extends Component {
       return (
         <button
           className="start-over-button"
-          onClick={() => this.props.startOver()}
+          onClick={() => this.props.dispatch(startOver())}
         >
           Try again
         </button>
@@ -35,7 +30,7 @@ export default class Form extends Component {
             Make a guess!
             <br />
             <input
-              value={this.state.inputValue}
+              value={this.props.inputValue}
               onChange={e => this.trackInputValue(e.target.value)}
               type="number"
               min={1}
@@ -51,3 +46,14 @@ export default class Form extends Component {
     }
   }
 }
+
+Form.defaultProps = {
+  inputValue: ""
+};
+
+const mapStateToProps = state => ({
+  inputValue: state.inputValue,
+  theyGotIt: state.theyGotIt
+});
+
+export default connect(mapStateToProps)(Form);

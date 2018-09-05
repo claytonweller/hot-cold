@@ -1,45 +1,50 @@
 import React, { Component } from "react";
+import { Provider, connect } from "react-redux";
+import store from "../store";
+
 import Feedback from "./Feedback.js";
 import Form from "./Form.js";
 import GuessCounter from "./GuessCounter";
 import PreviousGuesses from "./PreviousGuesses";
 
-export default class HotOrCold extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      theOneTrueNumber: Math.floor(Math.random() * 100) + 1,
-      currentGuess: 0,
-      lastGuess: 0,
-      previousGuesses: [],
-      theyGotIt: false
-    };
-  }
+import { theyGotIt } from "../actions/";
 
-  makeGuess(value) {
-    this.setState({
-      currentGuess: value,
-      lastGuess: this.state.currentGuess,
-      previousGuesses: [...this.state.previousGuesses, value]
-    });
-  }
+export class HotOrCold extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.props = {
+  //     theOneTrueNumber: Math.floor(Math.random() * 100) + 1,
+  //     currentGuess: 0,
+  //     lastGuess: 0,
+  //     previousGuesses: [],
+  //     theyGotIt: false
+  //   };
+  // }
 
-  startOver() {
-    this.setState({
-      theOneTrueNumber: Math.floor(Math.random() * 100) + 1,
-      currentGuess: 0,
-      lastGuess: 0,
-      previousGuesses: [],
-      theyGotIt: false
-    });
-  }
+  // makeGuess(value) {
+  //   this.setState({
+  //     currentGuess: value,
+  //     lastGuess: this.props.currentGuess,
+  //     previousGuesses: [...this.props.previousGuesses, value]
+  //   });
+  // }
+
+  // startOver() {
+  //   this.setState({
+  //     theOneTrueNumber: Math.floor(Math.random() * 100) + 1,
+  //     currentGuess: 0,
+  //     lastGuess: 0,
+  //     previousGuesses: [],
+  //     theyGotIt: false
+  //   });
+  // }
 
   componentDidUpdate() {
     if (
-      (this.state.currentGuess === this.state.theOneTrueNumber) &
-      !this.state.theyGotIt
+      (this.props.currentGuess === this.props.theOneTrueNumber) &
+      !this.props.theyGotIt
     ) {
-      this.setState({ theyGotIt: true });
+      this.props.dispatch(theyGotIt(true));
     }
   }
 
@@ -47,18 +52,34 @@ export default class HotOrCold extends Component {
     return (
       <div>
         <Feedback
-          currentGuess={this.state.currentGuess}
-          lastGuess={this.state.lastGuess}
-          theOneTrueNumber={this.state.theOneTrueNumber}
+          currentGuess={this.props.currentGuess}
+          lastGuess={this.props.lastGuess}
+          theOneTrueNumber={this.props.theOneTrueNumber}
         />
-        <Form
-          startOver={() => this.startOver()}
-          theyGotIt={this.state.theyGotIt}
-          makeGuess={value => this.makeGuess(value)}
-        />
-        <GuessCounter guessCount={this.state.previousGuesses.length} />
-        <PreviousGuesses previousGuesses={this.state.previousGuesses} />
+        <Provider store={store}>
+          <Form />
+        </Provider>
+        <GuessCounter guessCount={this.props.previousGuesses.length} />
+        <PreviousGuesses previousGuesses={this.props.previousGuesses} />
       </div>
     );
   }
 }
+
+HotOrCold.defaultProps = {
+  theOneTrueNumber: Math.floor(Math.random() * 100) + 1,
+  currentGuess: 0,
+  lastGuess: 0,
+  previousGuesses: [],
+  theyGotIt: false
+};
+
+const mapStateToProps = state => ({
+  theOneTrueNumber: state.theOneTrueNumber,
+  currentGuess: state.currentGuess,
+  lastGuess: state.lastGuess,
+  previousGuesses: state.previousGuesses,
+  theyGotIt: state.theyGotIt
+});
+
+export default connect(mapStateToProps)(HotOrCold);
