@@ -10,7 +10,8 @@ const initialState = {
   lastGuess: 0,
   previousGuesses: [],
   inputValue: "",
-  theyGotIt: false
+  theyGotIt: false,
+  theOneTrueNumber: Math.floor(Math.random() * 100) + 1
 };
 
 export const hotColdReducer = (state = initialState, action) => {

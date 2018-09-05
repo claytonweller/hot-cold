@@ -4,6 +4,7 @@ import { trackInputValue, makeGuess, startOver } from "../actions/";
 
 export class Form extends Component {
   submitGuess(e) {
+    console.log(e);
     e.preventDefault();
     this.props.dispatch(makeGuess(this.props.inputValue));
     this.props.dispatch(trackInputValue(""));
