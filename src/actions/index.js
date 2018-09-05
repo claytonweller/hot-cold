@@ -20,24 +20,3 @@ export const START_OVER = "START_OVER";
 export const startOver = () => ({
   type: START_OVER
 });
-
-/////// THINGS THAT LIVE IN STATE ////////
-// From HotOrCold
-
-// theOneTrueNumber
-// current guess
-// last guess
-// previous guesses
-// theyGotIt
-
-// From Form
-// input value
-
-////// ACTIONS ///////
-
-// In HotOrCold
-// startOver()
-// makeGuess(value)
-
-// In Form
-// submitGuess(e)
